@@ -1518,6 +1518,26 @@ window.smartsupp||(function(d) {
   c.src='../www.smartsuppchat.com/loaderd41d.js?';s.parentNode.insertBefore(c,s);
 })(document);
 </script>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: 'https://app.astrofx.pivotserver.com/api/index.php/getpackages',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                // Process and display the data as needed
+            },
+            error: function(error) {
+                console.error('There was a problem with the request:', error);
+            }
+        });
+    });
+    </script>
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <noscript> Powered by <a href=%e2%80%9chttps_/www.smartsupp.html target=“_blank”>Smartsupp</a></noscript>
 </body>
 
