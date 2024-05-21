@@ -1394,18 +1394,17 @@
     <div class="modal fade" id="invest-modal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="investForm" action="#t" method="GET">
-                    <input type="hidden" name="_token" value="RyI32QNVsPHdxGM6x475d1ioGcY6tFrYJEfylGgE" autocomplete="off">                    <div class="modal-body p-4">
-                        <h4 class="modal-title text-center plan-title">Basic Plan</h4>
+                <form class="investForm" action="#" method="GET">
+                    <input type="hidden" name="_token" value="RyI32QNVsPHdxGM6x475d1ioGcY6tFrYJEfylGgE" autocomplete="off">
+                    <div class="modal-body p-4">
+                        <h4 class="modal-title text-center plan-title" id="plan-title">Basic Plan</h4>
                         <div class="pt-3 pb-4">
                             <label for="amount" class="form-label">Enter Amount</label>
                             <div class="input-group input--group">
-                                <input type="number" name="amount" class="form-group-input form-control form--control bg--section"
-                                    placeholder="0.00" id="modalAmount">
+                                <input type="number" name="amount" class="form-group-input form-control form--control bg--section" placeholder="0.00" id="modalAmount">
                                 <button type="button" class="input-group-text">USD</button>
                             </div>
-
-                            <label for="amount" class="form-label">Select Wallet</label>
+                            <label for="wallet" class="form-label">Select Wallet</label>
                             <div class="input-group input--group">
                                 <select name="wallet" id="investMethod" class="form-control" required>
                                     <option value="checkout">checkout</option>
@@ -1416,8 +1415,7 @@
                         </div>
                         <input type="hidden" name="investId" id="investId" value="">
                         <div class="d-flex">
-                            <button type="button" class="btn shadow-none btn--danger me-2 w-50"
-                                data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn shadow-none btn--danger me-2 w-50" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn shadow-none btn--success w-50">Proceed</button>
                         </div>
                     </div>
@@ -1425,6 +1423,7 @@
             </div>
         </div>
     </div>
+    
     <!-- Invest Modal -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="assets/front/js/jquery-3.6.0.min.js"></script>
@@ -1520,21 +1519,38 @@ window.smartsupp||(function(d) {
 </script>
 
 <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: 'https://app.astrofx.pivotserver.com/api/index.php/getpackages',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                console.log(data);
-                
-            },
-            error: function(error) {
-                console.error('There was a problem with the request:', error);
-            }
+   document.addEventListener('DOMContentLoaded', function() {
+    // Fetch the investment packages
+    fetch('https://app.astrofx.pivotserver.com/api/index.php/getpackages')
+        .then(response => response.json())
+        .then(data => {
+            updateModal(data);
+        })
+        .catch(error => console.error('Error fetching investment packages:', error));
+
+    // Function to update the modal with the fetched packages
+    function updateModal(packages) {
+        const modalTitle = document.getElementById('plan-title');
+        const investMethodSelect = document.getElementById('investMethod');
+        const investIdInput = document.getElementById('investId');
+        
+        // Clear existing options
+        investMethodSelect.innerHTML = '';
+
+        // Populate the select options with fetched data
+        packages.forEach(package => {
+            const option = document.createElement('option');
+            option.value = package.id;  // Assuming each package has an 'id'
+            option.textContent = package.name;  // Assuming each package has a 'name'
+            investMethodSelect.appendChild(option);
         });
-    });
-    
+        
+        // Update the modal title if needed
+        modalTitle.textContent = packages[0].name;
+        investIdInput.value = packages[0].id;
+    }
+});
+
     </script>
     
 
