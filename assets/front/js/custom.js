@@ -108,7 +108,7 @@
 			  }
 			});
 		  
-			$('#submit-btn').prop('disabled', false);
+			// $('#submit-btn').prop('disabled', false);
 		  });
 
 
