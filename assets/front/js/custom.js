@@ -113,7 +113,6 @@
 		});
 
 
-
 		$(document).on("submit", "#contactform", function (e) {
 			e.preventDefault();
 			$(".gocover").show();
