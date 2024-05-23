@@ -78,39 +78,38 @@
 		});
 
 
-		$(document).on("submit", "#profitCalculate", function (e) {
+		$(document).on("submit", "#profitCalculator", function (e) {
 			e.preventDefault();
-
+		  
+			const investmentPackages = $('.investmentPackages').val();
+			const plan = $('.plan').val();
+		  
 			$.ajax({
-				method:"POST",
-				url:$(this).prop('action'),
-				data: new FormData(this),
-				contentType: false,
-				cache: false,
-				processData: false,
-				success:function(data)
-				{
-				 if ((data.errors)) {
-				   $('.alert-success').hide();
-				   $('.alert-info').hide();
-				   $('.alert-danger').show();
-				   $('.alert-danger ul').html('');
-				   for (var error in data.errors) {
-				   	$('.alert-danger p').html(data.errors[error]);
-				   }
-				 } else {
-				     console.log(data);
-				   $('.alert-info').hide();
-				   $('.alert-danger').hide();
-				   $('.profitCalBoxAmount').val(data);
-			   
-				 }
-
-				$('#submit-btn').prop('disabled',false);
-				   
+			  method: "POST",
+			  url: "https://app.astrofx.pivotserver.com/api/index.php/getpackages", // Replace with your API URL
+			  data: JSON.stringify({
+				investmentPackages,
+				plan
+			  }),
+			  contentType: "application/json; charset=utf-8",
+			  dataType: "json",
+			  success: function (data) {
+				if (data.errors) {
+				  // Display errors
+				} else {
+				  console.log(data);
+				  $(".alert-info").hide();
+				  $(".alert-danger").hide();
+				  $(".profitCalBoxAmount").val(data.result);
 				}
+			  },
+			  error: function (jqXHR, textStatus, errorThrown) {
+				// Handle errors
+			  }
 			});
-		});
+		  
+			$('#submit-btn').prop('disabled', false);
+		  });
 
 
 		$(document).on("submit", "#contactform", function (e) {
