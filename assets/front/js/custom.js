@@ -80,31 +80,34 @@
 
 		$(document).on("submit", "#profitCalculate", function (e) {
 			e.preventDefault();
-		
+
 			$.ajax({
-				method: "POST",
-				url: $(this).prop('action'),
+				method:"GET",
+				url:$(this).prop('action'),
 				data: new FormData(this),
 				contentType: false,
 				cache: false,
 				processData: false,
-				success: function(data) {
-					if (data.errors) {
-						$('.alert-success').hide();
-						$('.alert-info').hide();
-						$('.alert-danger').show();
-						$('.alert-danger ul').html('');
-						for (var error in data.errors) {
-							$('.alert-danger p').html(data.errors[error]);
-						}
-					} else {
-						console.log(data);
-						$('.alert-info').hide();
-						$('.alert-danger').hide();
-						$('.profitCalBoxAmount').val(data);
-					}
-		
-					$('#submit-btn').prop('disabled', false);
+				success:function(data)
+				{
+				 if ((data.errors)) {
+				   $('.alert-success').hide();
+				   $('.alert-info').hide();
+				   $('.alert-danger').show();
+				   $('.alert-danger ul').html('');
+				   for (var error in data.errors) {
+				   	$('.alert-danger p').html(data.errors[error]);
+				   }
+				 } else {
+				     console.log(data);
+				   $('.alert-info').hide();
+				   $('.alert-danger').hide();
+				   $('.profitCalBoxAmount').val(data);
+			   
+				 }
+
+				$('#submit-btn').prop('disabled',false);
+				   
 				}
 			});
 		});
