@@ -1,7 +1,7 @@
 class Main {
   async getPackages() {
     try {
-      const response = await axios.get("https://app.astrofx.pivotserver.com/api/index.php/getpackages", {});
+      const response = await axios.get("https://app.astrofx.pro/api/index.php/getpackages", {});
 
       if (response.data.statuscode == 0) {
         console.log(response.data);
