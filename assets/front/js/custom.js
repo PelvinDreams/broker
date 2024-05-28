@@ -82,7 +82,7 @@
 			e.preventDefault();
 
 			$.ajax({
-				method:"POST",
+				method:"GET",
 				url:$(this).prop('action'),
 				data: new FormData(this),
 				contentType: false,
@@ -111,7 +111,6 @@
 				}
 			});
 		});
-
 
 
 		$(document).on("submit", "#contactform", function (e) {
